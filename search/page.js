@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import { db } from '../lib/firebase'; // Adjust the path as necessary
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import Image from "next/image";
+import Link from 'next/link';
 
 export default function SearchPage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -116,6 +117,7 @@ export default function SearchPage() {
               <img src={artist.imageURL} alt={artist.name} />
               <h2>{artist.name}</h2>
               <p>{artist.bio}</p>
+              <Link href="/booking">BOOK NOW</Link>
             </div>
           ))}
         </div>
@@ -123,8 +125,3 @@ export default function SearchPage() {
     </div>
   );
 }
-
-        </div>
-    );
-    }
-    
