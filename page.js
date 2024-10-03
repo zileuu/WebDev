@@ -8,10 +8,10 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Welcome to First Eliseu App</h1>
-      <p>Logged in as Class project</p>
+      <h1 > HOTEL BOOKING SYSTEM</h1>
+      <p>Logged in to enable search options</p>
       <p>Please login or signup</p>
-      <Link href={"/dashboard"}>Go to Dashboard</Link>
+      <Link href={"/signup"}>Go to SignUp</Link>
     </div>
   );
 }
