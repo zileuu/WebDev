@@ -1,11 +1,18 @@
 'use client';
 import { useState } from 'react';
+import { authUser } from '../lib/firebase';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { FaGoogle} from 'react-icons/fa';
-import { auth, provider, signInWithPopup } from '../lib/firebase';
+import {  provider, signInWithPopup } from '../lib/firebase';
 import { db } from '../lib/firebase';
 import { collection, addDoc } from 'firebase/firestore';
+import { getAuth, sendSignInLinkToEmail } from "firebase/auth";
+
+
+
+
+
 
 
 export default function Signup() {
@@ -14,10 +21,15 @@ export default function Signup() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [address, setAddress] = useState('');
+  const [email, setEmail] = useState('');
   const [dob, setDob] = useState('');
   const router = useRouter();
- 
+  const auth = getAuth();
+
+
+
+
+
 
 
 
@@ -51,6 +63,14 @@ export default function Signup() {
   const handleSignup = async () => {
     const result = await addDoc(user);
     const user = result.user;
+
+    try {
+      await authUser(email, password);
+      // Redirect or show a success message
+    } catch (error) {
+      console.error('Login error:', error);
+      // Show an error message
+    }
    
 
     if (password !== confirmPassword) {
@@ -74,19 +94,19 @@ export default function Signup() {
 
     // Store in local storage
     localStorage.setItem('user', JSON.stringify(userData));
-    Cookies.set('username', username, { sameSite: 'strict' });
+    Cookies.set('username', user.email, { sameSite: 'strict' });
 
     try {
       // Add a new document in Firestore
       const userQueryByEmail = query(
         collection(db, 'users'),
-        where('email', '==', usernameOrEmail)
+        where('email', '==', email)
       );
 
       // Then by username
       const userQueryByUsername = query(
         collection(db, 'users'),
-        where('username', '==', usernameOrEmail)
+        where('username', '==', email)
       );
 
       // Fetch both queries
@@ -130,7 +150,7 @@ alert('Sign up failed');
   return (
     <div className="container">
       <h1>Signup</h1>
-      <form>
+      <form onSubmit={handleSignup}>
         <input
           type="text"
           placeholder="First Name"
@@ -163,9 +183,9 @@ alert('Sign up failed');
         />
         <input
           type="text"
-          placeholder="Address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="date"
