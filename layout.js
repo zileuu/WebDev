@@ -27,6 +27,8 @@ export default function Layout({ children }) {
 
 
   return (
+  
+      <html>
 <body>
    <div>
 
@@ -55,7 +57,7 @@ export default function Layout({ children }) {
         <td >Floors 0 to 12(OFFER 1)</td>
         <td  >  Hostel share experience</td>
         <td >
-          <h4><span class="label label-danger">Sold Out! </span></h4>
+          <h4><span >Sold Out! </span></h4>
         </td>
       </tr>
       <tr>
@@ -75,13 +77,12 @@ export default function Layout({ children }) {
       </tr>
       </table>
     </div>
+
+
     <main>
         <SessionProvider>
           {children}
-        </SessionProvider></main>
+        </SessionProvider></main> </body></html>
       
-
-        </body>
-
-
-
+        )
+}
