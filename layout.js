@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import './style.css';
-import {inter} from "next/font/google";
 import { SessionProvider } from "next-auth/react"
 
 
@@ -28,8 +27,6 @@ export default function Layout({ children }) {
 
 
   return (
-
-  
 <body>
    <div>
 
@@ -53,12 +50,11 @@ export default function Layout({ children }) {
           )}
         </nav>
       </header>
-    
-        <table>
+     <table>
       <tr >
         <td >Floors 0 to 12(OFFER 1)</td>
         <td  >  Hostel share experience</td>
-        <td class="dead-link soldout">
+        <td >
           <h4><span class="label label-danger">Sold Out! </span></h4>
         </td>
       </tr>
@@ -77,12 +73,9 @@ export default function Layout({ children }) {
         <td>  Our campsite offer</td>
         <td><a href="/booking"> Book now</a></td>
       </tr>
-
       </table>
-
-
-    
-    </div><main>
+    </div>
+    <main>
         <SessionProvider>
           {children}
         </SessionProvider></main>
@@ -92,15 +85,3 @@ export default function Layout({ children }) {
 
 
 
-
-      
-
-
-
-  );
-}
-
-     
-    </html>
-  );
-}
