@@ -1,72 +1,47 @@
 
            'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { FaGoogle} from 'react-icons/fa';
-import { auth, provider,  signInWithPopup } from '../lib/firebase';
-import { getDocs, collection, query, where } from 'firebase/firestore';
-import { db } from '../lib/firebase';
+import { auth, provider, provider2,  signInWithPopup } from '../lib/firebase';
+import {signInWithEmailAndPassword } from "firebase/auth";
+
+
 
 
 export default function Login() {
-  const [usernameOrEmail, setUsernameOrEmail] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
+  const [user, setUser] = useState(false)
+  useEffect(() => {
+    setUser(true)
+  }, [])
+ 
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
-      // Try to find the user by email first
-      const userQueryByEmail = query(
-        collection(db, 'users'),
-        where('email', '==', usernameOrEmail)
-      );
+      const result= await   signInWithEmailAndPassword(auth, provider2)
+      const user=result.user;
+      const userData={
+        username:user.displayName,
+        email: user.email,
+      };      // Store user data in localStorage
+      localStorage.setItem('user', JSON.stringify(userData));
 
-      // Then by username
-      const userQueryByUsername = query(
-        collection(db, 'users'),
-        where('username', '==', usernameOrEmail)
-      );
+      // Set username in cookies
+      Cookies.set('username', user.displayName, { sameSite: 'strict' });
 
-      // Fetch both queries
-      const querySnapshotByEmail = await getDocs(userQueryByEmail);
-      const querySnapshotByUsername = await getDocs(userQueryByUsername);
-
-      let userDoc = null;
-
-      // Check if we found a user by email
-      if (!querySnapshotByEmail.empty) {
-        userDoc = querySnapshotByEmail.docs[0];
-      } 
-      // If not, check by username
-      else if (!querySnapshotByUsername.empty) {
-        userDoc = querySnapshotByUsername.docs[0];
-      }
-
-      if (userDoc) {
-        const userData = userDoc.data();
-        // Verify password
-        if (userData.password === password) {
-          // Store user in local storage
-          localStorage.setItem('user', JSON.stringify(userData));
-
-          // Set username in cookies
-          Cookies.set('username', userData.username, { sameSite: 'strict' });
-
-          // Redirect to home page
-          router.push('/');
-        } else {
-          alert('Invalid credentials');
-        }
-      } else {
-        alert('Invalid credentials');
-      }
-    } catch (error) {
-      console.error('Error logging in:', error);
-      alert('Login failed');
-    }
-  };
-
+      // Redirect to home page
+      router.push('/');
+      // Redirect or show a success message
+    } catch(error) {
+      console.error(error);
+      
+  }};
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
@@ -76,6 +51,7 @@ export default function Login() {
         email: user.email,
         // You can store other details if needed
       };
+
 
       // Store user data in localStorage
       localStorage.setItem('user', JSON.stringify(userData));
@@ -90,17 +66,19 @@ export default function Login() {
       alert('Google sign-in failed');
     }
   };
- 
+  
 
   return (
     <div className="container">
       <h1>Login</h1>
-      <form>
+      <h2>{user ? 'This is never prerendered' : 'Prerendered'}</h2>
+
+      <form onSubmit={Login}>
         <input
           type="text"
           placeholder="Username or Email"
-          value={usernameOrEmail}
-          onChange={(e) => setUsernameOrEmail(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"
@@ -108,7 +86,7 @@ export default function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="bottom" onClick={handleLogin}>Login</button>
+        <button type="submit" onClick={handleLogin}>Login</button>
       </form>
       <div className="social-login">
         <button onClick={handleGoogleSignIn}>
