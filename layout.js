@@ -54,26 +54,26 @@ export default function Layout({ children }) {
       </header>
 
       < >
-        <td >Floors 0 to 12(OFFER 1)</td>
-        <td  >  Hostel share experience</td>
-        <td >
-          <h4><span >Sold Out! </span></h4>
-        </td>
+        <h3 >Floors 0 to 12(OFFER 1)</h3>
+        <h3  >  Hostel share experience</h3>
+     
+          <h3><span >Sold Out! </span></h3>
+    
       </> <br/>
       <>
-        <td>Floors 13 to 26(OFFER 2) </td>
-        <td>  Hotel private experience</td>
-        <td><a href="/booking">Book now</a></td>
+        <h3>Floors 13 to 26(OFFER 2) </h3>
+        <h3>  Hotel private experience</h3>
+        <h3><a href="/booking">Book now</a></h3>
       </> <br/>
       <>
-      <td>Floors 27 to 35(OFFER 3)</td>
-        <td>  Hotel Luxury experience</td>
-        <td><a href="/booking"> Book now</a></td>
+      <h3>Floors 27 to 35(OFFER 3)</h3>
+        <h3>  Hotel Luxury experience</h3>
+        <h3><a href="/booking"> Book now</a></h3>
       </> <br/>
       <>
-      <td>Outside Area(OFFER 4)</td>
-        <td>  Our campsite offer</td>
-        <td><a href="/booking"> Book now</a></td>
+      <h3>Outside Area(OFFER 4)</h3>
+        <h3>  Our campsite offer</h3>
+        <h3><a href="/booking"> Book now</a></h3>
       </> <br/>
    
     </div>
