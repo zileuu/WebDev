@@ -52,30 +52,30 @@ export default function Layout({ children }) {
           )}
         </nav>
       </header>
-     <table>
-      <tr >
+
+      < >
         <td >Floors 0 to 12(OFFER 1)</td>
         <td  >  Hostel share experience</td>
         <td >
           <h4><span >Sold Out! </span></h4>
         </td>
-      </tr>
-      <tr>
+      </> <br/>
+      <>
         <td>Floors 13 to 26(OFFER 2) </td>
         <td>  Hotel private experience</td>
         <td><a href="/booking">Book now</a></td>
-      </tr>
-      <tr>
+      </> <br/>
+      <>
       <td>Floors 27 to 35(OFFER 3)</td>
         <td>  Hotel Luxury experience</td>
         <td><a href="/booking"> Book now</a></td>
-      </tr>
-      <tr>
+      </> <br/>
+      <>
       <td>Outside Area(OFFER 4)</td>
         <td>  Our campsite offer</td>
         <td><a href="/booking"> Book now</a></td>
-      </tr>
-      </table>
+      </> <br/>
+   
     </div>
 
 
